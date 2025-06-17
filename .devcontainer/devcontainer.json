@@ -23,7 +23,9 @@
         "ms-iot.vscode-ros",
         "esbenp.prettier-vscode",
         "EditorConfig.EditorConfig",
-        "jeff-hykin.better-dockerfile-syntax"
+        "jeff-hykin.better-dockerfile-syntax",
+        "tamasfe.even-better-toml",
+        "jjjermiah.pixi-vscode"
       ],
       "settings": {
         "ros.distro": "humble",

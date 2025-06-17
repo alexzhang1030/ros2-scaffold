@@ -29,13 +29,18 @@ ENV ZSH_CUSTOM /home/$USERNAME/.oh-my-zsh/custom
 ENV ZDOTDIR /home/$USERNAME
 
 # oh-my-zsh
-RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-RUN git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions --depth=1
-RUN git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting --depth=1
-RUN git clone https://github.com/spaceship-prompt/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt" --depth=1
-RUN ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
-RUN sed -i 's/^plugins=(.*/plugins=(git zsh-autosuggestions zsh-syntax-highlighting)/g' /home/$USERNAME/.zshrc
-RUN sed -i 's/^ZSH_THEME=.*/ZSH_THEME="spaceship"/g' /home/$USERNAME/.zshrc
+
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" && \
+    git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions --depth=1 && \
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting --depth=1 && \
+    git clone https://github.com/spaceship-prompt/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt" --depth=1 && \
+    ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme" && \
+    sed -i 's/^plugins=(.*/plugins=(git zsh-autosuggestions zsh-syntax-highlighting)/g' /home/$USERNAME/.zshrc && \
+    sed -i 's/^ZSH_THEME=.*/ZSH_THEME="spaceship"/g' /home/$USERNAME/.zshrc
+
+# pixi
+ENV PIXI_HOME=/home/$USERNAME/.pixi
+RUN curl -fsSL https://pixi.sh/install.sh | sh
 
 # Make default shell zsh
 ENV SHELL /bin/zsh
@@ -43,6 +48,7 @@ ENV SHELL /bin/zsh
 # Source ROS environment automatically
 RUN echo "source /opt/ros/$ROS_DISTRO/setup.zsh" >> /home/$USERNAME/.zshrc && \
     echo "source /home/ws/install/setup.zsh" >> /home/$USERNAME/.zshrc && \
-    echo "alias lg='lazygit'" >> /home/$USERNAME/.zshrc
+    echo "alias lg='lazygit'" >> /home/$USERNAME/.zshrc && \
+    echo "export PATH=\"${PIXI_HOME}/bin:\$PATH\"" >> /home/$USERNAME/.zshrc
 
 CMD ["/bin/zsh"]
