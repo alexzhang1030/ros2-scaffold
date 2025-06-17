@@ -4,7 +4,8 @@ ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
 # Long-term no-update dependencies
-RUN apt-get update && apt-get upgrade -y && apt-get install -y sudo git curl wget zsh vim neovim zsh-autosuggestions zsh-syntax-highlighting
+RUN apt-get update && apt-get upgrade -y && \
+    apt-get install -y sudo git curl wget zsh vim neovim zsh-autosuggestions zsh-syntax-highlighting gnupg2
 
 # Setup LazyGit
 RUN LAZYGIT_VERSION=0.52.0 && \
