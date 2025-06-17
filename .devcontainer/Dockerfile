@@ -1,10 +1,10 @@
-ARG DOCKER_REPO
-ARG ROS_DISTRO
-ARG IMAGE_SUFFIX
-FROM $DOCKER_REPO:$ROS_DISTRO$IMAGE_SUFFIX
+FROM ubuntu:22.04
 ARG USERNAME
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
+
+# Long-term no-update dependencies
+RUN apt-get update && apt-get upgrade -y && apt-get install -y sudo git curl wget zsh vim neovim zsh-autosuggestions zsh-syntax-highlighting
 
 # Setup LazyGit
 RUN LAZYGIT_VERSION=0.52.0 && \
@@ -12,9 +12,6 @@ RUN LAZYGIT_VERSION=0.52.0 && \
   tar xf lazygit.tar.gz lazygit && \
   sudo install lazygit -D -t /usr/local/bin/ && \
   rm -rf lazygit.tar.gz lazygit
-
-# Long-term no-update dependencies
-RUN apt-get update && apt-get upgrade -y && apt-get install -y sudo git curl wget zsh vim neovim zsh-autosuggestions zsh-syntax-highlighting
 
 # Add user
 RUN groupadd --gid $USER_GID $USERNAME \
@@ -46,9 +43,7 @@ RUN curl -fsSL https://pixi.sh/install.sh | sh
 ENV SHELL /bin/zsh
 
 # Source ROS environment automatically
-RUN echo "source /opt/ros/$ROS_DISTRO/setup.zsh" >> /home/$USERNAME/.zshrc && \
-    echo "source /home/ws/install/setup.zsh" >> /home/$USERNAME/.zshrc && \
-    echo "alias lg='lazygit'" >> /home/$USERNAME/.zshrc && \
+RUN echo "alias lg='lazygit'" >> /home/$USERNAME/.zshrc && \
     echo "export PATH=\"${PIXI_HOME}/bin:\$PATH\"" >> /home/$USERNAME/.zshrc
 
 CMD ["/bin/zsh"]

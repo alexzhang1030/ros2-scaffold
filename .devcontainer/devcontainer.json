@@ -5,10 +5,7 @@
   "build": {
     "dockerfile": "Dockerfile",
     "args": {
-      "USERNAME": "${localEnv:USER}",
-      "DOCKER_REPO": "osrf/ros",
-      "ROS_DISTRO": "humble",
-      "IMAGE_SUFFIX": "-desktop"
+      "USERNAME": "${localEnv:USER}"
     }
   },
   "workspaceFolder": "/home/ws",
