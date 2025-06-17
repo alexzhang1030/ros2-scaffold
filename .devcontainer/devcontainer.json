@@ -8,7 +8,7 @@
       "USERNAME": "${localEnv:USER}",
       "DOCKER_REPO": "osrf/ros",
       "ROS_DISTRO": "humble",
-      "IMAGE_SUFFIX": "-desktop-full"
+      "IMAGE_SUFFIX": "-desktop"
     }
   },
   "workspaceFolder": "/home/ws",
