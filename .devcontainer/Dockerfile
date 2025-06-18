@@ -45,6 +45,7 @@ ENV SHELL /bin/zsh
 
 # Source ROS environment automatically
 RUN echo "alias lg='lazygit'" >> /home/$USERNAME/.zshrc && \
-    echo "export PATH=\"${PIXI_HOME}/bin:\$PATH\"" >> /home/$USERNAME/.zshrc
+    echo "export PATH=\"${PIXI_HOME}/bin:\$PATH\"" >> /home/$USERNAME/.zshrc && \
+    echo 'eval "$(pixi completion --shell zsh)"' >> ~/.zshrc
 
 CMD ["/bin/zsh"]

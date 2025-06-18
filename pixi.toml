@@ -6,7 +6,12 @@ platforms = ["linux-64"]
 version = "0.1.0"
 
 [tasks]
+create = { cmd = "ros2 pkg create --build-type ament_cmake", cwd = "src" }
 build = "colcon build --cmake-args -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
+
+[tasks.build-pkg]
+args = ["name"]
+cmd = "colcon build --cmake-args -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_EXPORT_COMPILE_COMMANDS=ON --packages-select {{ name }}"
 
 [dependencies]
 ros-humble-turtlesim = ">=1.4.2,<2"

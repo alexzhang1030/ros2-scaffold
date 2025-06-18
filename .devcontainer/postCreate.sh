@@ -1,2 +1,2 @@
 #!/bin/bash
-pixi install
+pixi install --locked
